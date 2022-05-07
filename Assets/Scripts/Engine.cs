@@ -22,6 +22,9 @@ public class Engine : MonoBehaviour
 
     private Rigidbody rb;
 
+    [SerializeField]
+    private AudioSource audioSource;
+
     public enum Dir{
         FRONT,
         LEFT,
@@ -39,6 +42,8 @@ public class Engine : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         rb.mass = Mass;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -48,6 +53,16 @@ public class Engine : MonoBehaviour
         {
             if (EngineOn == false)
             {
+
+                if (audioSource.volume > 0f)
+                {
+                    audioSource.volume -= Time.deltaTime;
+                }
+                else
+                {
+                    audioSource.volume = 0f;
+                }
+
                 if (Acc > 0f)
                 {
                     Acc -= 0.1f * Time.deltaTime;
@@ -63,6 +78,15 @@ public class Engine : MonoBehaviour
             }
             else
             {
+                if (audioSource.volume < 1f)
+                {
+                    audioSource.volume += Time.deltaTime;
+                }
+                else
+                {
+                    audioSource.volume = 1f;
+                }
+
                 if (Acc > 1f)
                 {
                     Acc -= 0.1f * Time.deltaTime;
@@ -81,6 +105,15 @@ public class Engine : MonoBehaviour
         {
             if (EngineOn == false)
             {
+                if(audioSource.volume > 0f)
+                {
+                    audioSource.volume -= Time.deltaTime;
+                }
+                else
+                {
+                    audioSource.volume = 0f;
+                }
+
                 if (Acc > 0f)
                 {
                     Acc -= 0.1f * Time.deltaTime;
@@ -96,8 +129,18 @@ public class Engine : MonoBehaviour
             }
             else
             {
+                if (audioSource.volume < 1f)
+                {
+                    audioSource.volume += Time.deltaTime;
+                }
+                else
+                {
+                    audioSource.volume = 1f;
+                }
+
                 if (Acc > 1f)
                 {
+                    
                     Acc -= 0.1f * Time.deltaTime;
                 }
                 else
