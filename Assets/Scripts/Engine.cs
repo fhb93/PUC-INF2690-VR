@@ -20,7 +20,13 @@ public class Engine : MonoBehaviour
 
     private Vector3 Force;
 
+    private Vector3 AuxForce;
+
     private Rigidbody rb;
+
+    private float amount = 0;
+
+    private Vector3 m_EulerAngleVelocity;
 
     [SerializeField]
     private AudioSource audioSource;
@@ -44,6 +50,8 @@ public class Engine : MonoBehaviour
         rb.mass = Mass;
 
         audioSource = GetComponent<AudioSource>();
+
+        m_EulerAngleVelocity = new Vector3(0, 1, 0);
     }
 
     // Update is called once per frame
@@ -223,13 +231,18 @@ public class Engine : MonoBehaviour
                     Force += Vector3.forward;
                 }
                 if(i == (int) Dir.LEFT){
-                    Force += Vector3.left;
+                    Rotation(Vector3.left);
+                    Force += Vector3.forward;
+                    Force += Vector3.left * 0.25f;
                 }
                 if(i == (int) Dir.BACK){
+
                     Force += Vector3.back;
                 }
                 if(i == (int) Dir.RIGHT){
-                    Force += Vector3.right;
+                    Rotation(Vector3.right);
+                    Force += Vector3.forward;
+                    Force += Vector3.right * 0.25f;
                 }
 
                 if (i == (int)Dir.DOWN)
@@ -241,10 +254,43 @@ public class Engine : MonoBehaviour
 
                 Force = Force * Mass * Acc;
             }
-            
         }
 
-
         rb.velocity = Force;
+       // gameObject.transform.position = rb.position;
+    }
+    
+
+    void Rotation(Vector3 dir)
+    {
+        //// Smoothly tilts a transform towards a target rotation.
+        //float tiltAroundY = dir.x * tiltAngle * Time.fixedDeltaTime;
+
+        //if (dir.x > 0)
+        //{
+        //    tiltAngle += 0.01f;
+        //}
+        //else
+        //{
+        //    tiltAngle -= 0.01f;
+        //}
+        //// Rotate the cube by converting the angles into a quaternion.
+        //Quaternion target = Quaternion.Euler(0, tiltAroundY, 0);
+
+
+        //// Dampen towards the target rotation
+        ////transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
+        if(dir.x > 0)
+        {
+            amount = Time.fixedDeltaTime;
+        }
+        else
+        {
+            amount = -Time.fixedDeltaTime;
+        }
+
+        Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * amount);
+
+        rb.MoveRotation(rb.rotation * deltaRotation);
     }
 }
