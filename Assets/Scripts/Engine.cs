@@ -255,8 +255,6 @@ public class Engine : MonoBehaviour
                 }
 
                 if(i == (int) Dir.LEFT){
-                    Force += Vector3.back;
-
                     Rotation(Vector3.left);
                 }
 
@@ -266,7 +264,6 @@ public class Engine : MonoBehaviour
                 }
 
                 if(i == (int) Dir.RIGHT){
-                    Force += Vector3.back;
 
                     Rotation(Vector3.right);
                 }
