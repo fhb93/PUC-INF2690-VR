@@ -12,6 +12,7 @@ public class Engine : MonoBehaviour
     private float Acc;
 
     [SerializeField]
+    [Range(1f, 4f)]
     private float MaxAcc;
 
     public bool EngineOn;
@@ -24,7 +25,11 @@ public class Engine : MonoBehaviour
 
     private Rigidbody rb;
 
-    private float amount = 0;
+    //Roation Angle
+    private float RotationAmount = 0;
+
+    [Range(1f, 4f)]
+    public float RateUp = 1f;
 
     private Vector3 m_EulerAngleVelocity;
 
@@ -95,13 +100,13 @@ public class Engine : MonoBehaviour
                     audioSource.volume = 1f;
                 }
 
-                if (Acc > 1f)
+                if (Acc > MaxAcc)
                 {
                     Acc -= 0.1f * Time.deltaTime;
                 }
                 else
                 {
-                    Acc = 1f;
+                    Acc = MaxAcc;
                                         
                     Force = Vector3.forward;
                 }
@@ -130,7 +135,7 @@ public class Engine : MonoBehaviour
                 {
                     Acc = 0f;
 
-                    Force = Vector3.up;
+                    Force = Vector3.up * RateUp;
                 }
 
                 return;
@@ -146,14 +151,14 @@ public class Engine : MonoBehaviour
                     audioSource.volume = 1f;
                 }
 
-                if (Acc > 1f)
+                if (Acc > MaxAcc)
                 {
                     
                     Acc -= 0.1f * Time.deltaTime;
                 }
                 else
                 {
-                    Acc = 1f;
+                    Acc = MaxAcc;
 
                     Force = Vector3.forward + 4f * Vector3.up * Acc;
 
@@ -182,13 +187,13 @@ public class Engine : MonoBehaviour
 
         if(noInput == true)
         {
-            if (Acc > 1f)
+            if (Acc >= MaxAcc)
             {
                 Acc -= Time.deltaTime;
             }
             else
             {
-                Acc = 1f;
+                Acc = MaxAcc;
 
                 Force = Vector3.forward;
             }
@@ -282,14 +287,14 @@ public class Engine : MonoBehaviour
         ////transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
         if(dir.x > 0)
         {
-            amount = Time.fixedDeltaTime;
+            RotationAmount = Time.fixedDeltaTime;
         }
         else
         {
-            amount = -Time.fixedDeltaTime;
+            RotationAmount = -Time.fixedDeltaTime;
         }
 
-        Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * amount);
+        Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * RotationAmount);
 
         rb.MoveRotation(rb.rotation * deltaRotation);
     }
