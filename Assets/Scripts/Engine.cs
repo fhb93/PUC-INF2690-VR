@@ -19,6 +19,7 @@ public class Engine : MonoBehaviour
 
     public bool HydrogenOn;
 
+    [SerializeField]
     private Vector3 Force;
 
     private Vector3 AuxForce;
@@ -35,6 +36,8 @@ public class Engine : MonoBehaviour
 
     [SerializeField]
     private AudioSource audioSource;
+
+    private bool IsFirstTimeEngineOn = true;
 
     public enum Dir{
         FRONT,
@@ -91,6 +94,13 @@ public class Engine : MonoBehaviour
             }
             else
             {
+                if(IsFirstTimeEngineOn == true)
+                {
+                    IsFirstTimeEngineOn = false;
+
+                    Force += Vector3.forward * MaxAcc;
+                }
+
                 if (audioSource.volume < 1f)
                 {
                     audioSource.volume += Time.deltaTime;
@@ -108,10 +118,9 @@ public class Engine : MonoBehaviour
                 {
                     Acc = MaxAcc;
                                         
-                    Force = Vector3.forward;
+                    //Force = Vector3.forward;
                 }
             }
-
             
         }
         else
@@ -142,6 +151,13 @@ public class Engine : MonoBehaviour
             }
             else
             {
+                if (IsFirstTimeEngineOn == true)
+                {
+                    IsFirstTimeEngineOn = false;
+
+                    Force += Vector3.forward * MaxAcc;
+                }
+
                 if (audioSource.volume < 1f)
                 {
                     audioSource.volume += Time.deltaTime;
@@ -195,7 +211,9 @@ public class Engine : MonoBehaviour
             {
                 Acc = MaxAcc;
 
-                Force = Vector3.forward;
+                //Force += Vector3.forward;
+
+                //Force = Force.normalized;
             }
         }
     }        
@@ -233,21 +251,24 @@ public class Engine : MonoBehaviour
                 }
 
                 if(i == (int) Dir.FRONT){
-                    Force += Vector3.forward;
+                    Force = Vector3.forward;
                 }
+
                 if(i == (int) Dir.LEFT){
+                    Force += Vector3.back;
+
                     Rotation(Vector3.left);
-                    Force += Vector3.forward;
-                    Force += Vector3.left * 0.25f;
                 }
+
                 if(i == (int) Dir.BACK){
 
                     Force += Vector3.back;
                 }
+
                 if(i == (int) Dir.RIGHT){
+                    Force += Vector3.back;
+
                     Rotation(Vector3.right);
-                    Force += Vector3.forward;
-                    Force += Vector3.right * 0.25f;
                 }
 
                 if (i == (int)Dir.DOWN)
@@ -255,13 +276,13 @@ public class Engine : MonoBehaviour
                     Force += Vector3.down;
                 }
 
-                Force = Force.normalized;
+                //Force = Force.normalized;
+                Force = Force.normalized * Mass * Acc;
 
-                Force = Force * Mass * Acc;
+                rb.AddForce(Force);
             }
         }
 
-        rb.velocity = Force;
        // gameObject.transform.position = rb.position;
     }
     
@@ -288,14 +309,20 @@ public class Engine : MonoBehaviour
         if(dir.x > 0)
         {
             RotationAmount = Time.fixedDeltaTime;
+
+            Force = Force + Vector3.forward + (dir * 10 * RotationAmount);
         }
         else
         {
             RotationAmount = -Time.fixedDeltaTime;
+
+            Force = Force + Vector3.forward - (dir * 10 * RotationAmount);
         }
 
         Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * RotationAmount);
 
         rb.MoveRotation(rb.rotation * deltaRotation);
+
+       
     }
 }
