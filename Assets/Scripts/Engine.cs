@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static UnityEngine.InputManagerEntry;
 
 public class Engine : MonoBehaviour
 {
@@ -39,16 +41,28 @@ public class Engine : MonoBehaviour
 
     private bool IsFirstTimeEngineOn = true;
 
+    private static Quaternion forwardDirection = Quaternion.identity;
+    private static Quaternion rightDirection = Quaternion.FromToRotation(Vector3.forward, Vector3.right);
+    private static Quaternion leftDirection = Quaternion.FromToRotation(Vector3.forward, Vector3.left);
+    private static Quaternion backDirection = Quaternion.FromToRotation(Vector3.forward, Vector3.back);
+
+    private Vector3 backPosition;
+
+    public Vector3 RotationForce;
+
+    private float maxTimer = 0.4f;
+
     public enum Dir{
         FRONT,
         LEFT,
         BACK,
         RIGHT,
         UP,
-        DOWN,
+        //DOWN,
     }
 
-    public bool[] InputDirection = new bool[6];
+    [Range(-1, 1)]
+    public float[] InputDirection = new float[4];
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +74,15 @@ public class Engine : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         m_EulerAngleVelocity = new Vector3(0, 1, 0);
+
+        backPosition = GameObject.Find("ForcesTarget").transform.position;
+        
+        for(int i = 0; i < InputDirection.Length; i++)
+        {
+            InputDirection[i] = 0f;
+        }
+
+        //Time.timeScale = 10f;
     }
 
     // Update is called once per frame
@@ -121,7 +144,6 @@ public class Engine : MonoBehaviour
                     //Force = Vector3.forward;
                 }
             }
-            
         }
         else
         {
@@ -155,7 +177,7 @@ public class Engine : MonoBehaviour
                 {
                     IsFirstTimeEngineOn = false;
 
-                    Force += Vector3.forward * MaxAcc;
+                    //Force += Vector3.forward * MaxAcc;
                 }
 
                 if (audioSource.volume < 1f)
@@ -175,26 +197,27 @@ public class Engine : MonoBehaviour
                 else
                 {
                     Acc = MaxAcc;
+                    
+                    //Force = Vector3.forward * Acc +
 
-                    Force = Vector3.forward + 4f * Vector3.up * Acc;
-
-                    Force = Force.normalized;
+                    //Force = Force.normalized;
                 }
             }
         }
 
-        InputDirection[(int) Dir.FRONT] = Input.GetKey("up");
-        InputDirection[(int) Dir.LEFT] = Input.GetKey("left");
-        InputDirection[(int) Dir.BACK] = Input.GetKey("down");
-        InputDirection[(int) Dir.RIGHT] = Input.GetKey("right");
-     //   InputDirection[(int)Dir.UP] = Input.GetKey(KeyCode.Y);
-        InputDirection[(int)Dir.DOWN] = Input.GetKey(KeyCode.U);
+        InputDirection[(int) Dir.FRONT] = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
+        
+        InputDirection[(int) Dir.LEFT] = Mathf.Clamp(Input.GetAxis("Horizontal"), -1, 0);
+
+        InputDirection[(int) Dir.BACK] = Mathf.Clamp(Input.GetAxis("Vertical"), -1, 0);
+
+        InputDirection[(int) Dir.RIGHT] = Mathf.Clamp(Input.GetAxis("Horizontal"), 0, 1);
 
         bool noInput = true;
 
-        for(int i = 0; i < 6; i++)
+        for(int i = 0; i < 4; i++)
         {
-            if(i != 0 && InputDirection[i] == true)
+            if(i != 0 && InputDirection[i] != 0f)
             {
                 noInput = false;
                 break;
@@ -216,7 +239,8 @@ public class Engine : MonoBehaviour
                 //Force = Force.normalized;
             }
         }
-    }        
+    }
+
 
     void FixedUpdate()
     {
@@ -231,95 +255,104 @@ public class Engine : MonoBehaviour
                         
             rb.velocity = Force;
 
+
             if (EngineOn == false)
             {
+                Force = transform.up * RateUp;
+
                 return;
             }
-        }
-        
-
-        for(int i = 0; i < 6; i++)
-        {
-            if(InputDirection[i] == true)
+            else
             {
-                if(Acc < MaxAcc)
-                {
-                    Acc += 2f * Time.deltaTime;
-                }
-                else{
-                    Acc = MaxAcc;
-                }
-
-                if(i == (int) Dir.FRONT){
-                    Force = Vector3.forward;
-                }
-
-                if(i == (int) Dir.LEFT){
-                    Rotation(Vector3.left);
-                }
-
-                if(i == (int) Dir.BACK){
-
-                    Force += Vector3.back;
-                }
-
-                if(i == (int) Dir.RIGHT){
-
-                    Rotation(Vector3.right);
-                }
-
-                if (i == (int)Dir.DOWN)
-                {
-                    Force += Vector3.down;
-                }
-
-                //Force = Force.normalized;
-                Force = Force.normalized * Mass * Acc;
-
-                rb.AddForce(Force);
+                Force = transform.forward + transform.up * RateUp;
             }
-        }
-
-       // gameObject.transform.position = rb.position;
-    }
-    
-
-    void Rotation(Vector3 dir)
-    {
-        //// Smoothly tilts a transform towards a target rotation.
-        //float tiltAroundY = dir.x * tiltAngle * Time.fixedDeltaTime;
-
-        //if (dir.x > 0)
-        //{
-        //    tiltAngle += 0.01f;
-        //}
-        //else
-        //{
-        //    tiltAngle -= 0.01f;
-        //}
-        //// Rotate the cube by converting the angles into a quaternion.
-        //Quaternion target = Quaternion.Euler(0, tiltAroundY, 0);
-
-
-        //// Dampen towards the target rotation
-        ////transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
-        if(dir.x > 0)
-        {
-            RotationAmount = Time.fixedDeltaTime;
-
-            Force = Force + Vector3.forward + (dir * 10 * RotationAmount);
         }
         else
         {
-            RotationAmount = -Time.fixedDeltaTime;
-
-            Force = Force + Vector3.forward - (dir * 10 * RotationAmount);
+            if (EngineOn == true)
+            {
+                Force = transform.forward * constant2;
+            }
         }
 
-        Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * RotationAmount);
+        rb.AddForce(Force * Acc);
+        
 
-        rb.MoveRotation(rb.rotation * deltaRotation);
 
-       
+        for (int i = 0; i < 4; i++)
+        {
+            if (InputDirection[i] != 0f)
+            {
+                if (Acc < MaxAcc)
+                {
+                    Acc += 2f * Time.deltaTime;
+                }
+                else
+                {
+                    Acc = MaxAcc;
+                }
+            }
+
+            if(InputDirection[i] > 0f)
+            {
+                if (i == (int)Dir.FRONT)
+                {
+                    //TODO usar transform.Forward
+                }
+                else if (i == (int)Dir.RIGHT)
+                {
+                    
+                    Rotation(Vector3.right);
+                }
+            }
+            else if(InputDirection[i] < 0f)
+            {
+                if (i == (int)Dir.LEFT)
+                {
+                    Rotation(Vector3.left);
+                }
+                else if (i == (int)Dir.BACK)
+                {
+
+                    Force = Vector3.back;
+                }
+            }
+        }
+
+
+    }
+
+    public float constant = 0f;
+    public float constant2 = 0f;
+
+    void Rotation(Vector3 dir)
+    {
+        //timer += Time.fixedDeltaTime;
+
+        //if(timer > maxTimer)
+        //{
+        //    return;
+        //}
+        //RotationForce = Vector3.zero;
+
+        if (dir.x > 0)
+        {
+            //Multiplicar por uma constante e testar no inspector
+            RotationForce = Vector3.left;
+        }
+        else
+        {
+            //Multiplicar por uma constante e testar no inspector
+            RotationForce = Vector3.right;
+        }
+
+        //rb.AddTorque(RotationForce * Acc * 10000); //.rotation = Quaternion.Euler(0, RotationForce.x, 0);
+
+       // rb.AddTorque(Vector3.right * 100000 * Input.GetAxis("Horizontal"));
+
+        //multiplicar pela constante do inspector
+        rb.AddForceAtPosition(RotationForce * constant, backPosition);
+
+        Force = rb.velocity;
     }
 }

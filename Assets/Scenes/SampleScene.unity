@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.5993783, g: 0.5997548, b: 0.599493, a: 1}
+  m_IndirectSpecularColor: {r: 0.57631105, g: 0.58525217, b: 0.46574122, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -287,7 +287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &705507994
 Light:
   m_ObjectHideFlags: 0
@@ -496,6 +496,36 @@ Transform:
   - {fileID: 963194228}
   m_Father: {fileID: 1725982594}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1595385939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1595385940}
+  m_Layer: 0
+  m_Name: ForcesTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1595385940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595385939}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -98}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6727095403411257571}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1725982592
 GameObject:
@@ -810,13 +840,44 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6727095404185000745, guid: 0e4a00106868f4741a4bcff7eb40e83c,
+        type: 3}
+      propertyPath: MaxAcc
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6727095404185000745, guid: 0e4a00106868f4741a4bcff7eb40e83c,
+        type: 3}
+      propertyPath: HydrogenOn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6727095404185000745, guid: 0e4a00106868f4741a4bcff7eb40e83c,
+        type: 3}
+      propertyPath: InputDirection.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6727095404185000746, guid: 0e4a00106868f4741a4bcff7eb40e83c,
         type: 3}
       propertyPath: m_Name
       value: Zeppelin
       objectReference: {fileID: 0}
+    - target: {fileID: 6727095404185000747, guid: 0e4a00106868f4741a4bcff7eb40e83c,
+        type: 3}
+      propertyPath: m_Drag
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6727095404185000747, guid: 0e4a00106868f4741a4bcff7eb40e83c,
+        type: 3}
+      propertyPath: m_Mass
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e4a00106868f4741a4bcff7eb40e83c, type: 3}
+--- !u!4 &6727095403411257571 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6727095404185000744, guid: 0e4a00106868f4741a4bcff7eb40e83c,
+    type: 3}
+  m_PrefabInstance: {fileID: 6727095403411257570}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7558081335469403624
 PrefabInstance:
   m_ObjectHideFlags: 0
