@@ -12,8 +12,8 @@ public class MoveCamera : MonoBehaviour
 
     void FixedUpdate()
     {
-        float rotateHorizontal = Input.GetAxis("Mouse X") * 2;
-        float rotateVertical = Input.GetAxis("Mouse Y");
+        float rotateHorizontal = Input.GetAxis("Mouse X") * 20;
+        float rotateVertical = Input.GetAxis("Mouse Y") * 18;
        // Vector3 target = (transform.up * rotateHorizontal - transform.right * rotateVertical) * sensitivity;
         transform.Rotate(transform.up * rotateHorizontal * sensitivity);
         transform.Rotate(-transform.right * rotateVertical * sensitivity);

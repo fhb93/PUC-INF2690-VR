@@ -31,7 +31,7 @@ public class Engine : MonoBehaviour
     //Roation Angle
     private float RotationAmount = 0;
 
-    [Range(1f, 4f)]
+    [Range(1f, 10f)]
     public float RateUp = 1f;
 
     private Vector3 m_EulerAngleVelocity;
@@ -40,6 +40,10 @@ public class Engine : MonoBehaviour
     private AudioSource audioSource;
 
     private bool IsFirstTimeEngineOn = true;
+
+    [SerializeField]
+    private float maxHeight = 3;
+
 
     private static Quaternion forwardDirection = Quaternion.identity;
     private static Quaternion rightDirection = Quaternion.FromToRotation(Vector3.forward, Vector3.right);
@@ -88,11 +92,12 @@ public class Engine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Engine AudioSource and ACC volume handler
         if (HydrogenOn == false)
         {
             if (EngineOn == false)
             {
-
+                //smooth decrease
                 if (audioSource.volume > 0f)
                 {
                     audioSource.volume -= Time.deltaTime;
@@ -102,28 +107,13 @@ public class Engine : MonoBehaviour
                     audioSource.volume = 0f;
                 }
 
-                if (Acc > 0f)
-                {
-                    Acc -= 0.1f * Time.deltaTime;
-                }
-                else
-                {
-                    Acc = 0f;
-
-                    Force = Vector3.zero;
-                }
-
-                return;
+                SmoothChangeAcc(false);
             }
             else
             {
-                if(IsFirstTimeEngineOn == true)
-                {
-                    IsFirstTimeEngineOn = false;
+                SmoothChangeAcc(true);
 
-                    Force += Vector3.forward * MaxAcc;
-                }
-
+                //smooth increase
                 if (audioSource.volume < 1f)
                 {
                     audioSource.volume += Time.deltaTime;
@@ -131,17 +121,6 @@ public class Engine : MonoBehaviour
                 else
                 {
                     audioSource.volume = 1f;
-                }
-
-                if (Acc > MaxAcc)
-                {
-                    Acc -= 0.1f * Time.deltaTime;
-                }
-                else
-                {
-                    Acc = MaxAcc;
-                                        
-                    //Force = Vector3.forward;
                 }
             }
         }
@@ -158,27 +137,11 @@ public class Engine : MonoBehaviour
                     audioSource.volume = 0f;
                 }
 
-                if (Acc > 0f)
-                {
-                    Acc -= 0.1f * Time.deltaTime;
-                }
-                else
-                {
-                    Acc = 0f;
-
-                    Force = Vector3.up * RateUp;
-                }
-
-                return;
+                SmoothChangeAcc(false);
             }
             else
             {
-                if (IsFirstTimeEngineOn == true)
-                {
-                    IsFirstTimeEngineOn = false;
-
-                    //Force += Vector3.forward * MaxAcc;
-                }
+                SmoothChangeAcc(true);
 
                 if (audioSource.volume < 1f)
                 {
@@ -187,20 +150,6 @@ public class Engine : MonoBehaviour
                 else
                 {
                     audioSource.volume = 1f;
-                }
-
-                if (Acc > MaxAcc)
-                {
-                    
-                    Acc -= 0.1f * Time.deltaTime;
-                }
-                else
-                {
-                    Acc = MaxAcc;
-                    
-                    //Force = Vector3.forward * Acc +
-
-                    //Force = Force.normalized;
                 }
             }
         }
@@ -212,35 +161,20 @@ public class Engine : MonoBehaviour
         InputDirection[(int) Dir.BACK] = Mathf.Clamp(Input.GetAxis("Vertical"), -1, 0);
 
         InputDirection[(int) Dir.RIGHT] = Mathf.Clamp(Input.GetAxis("Horizontal"), 0, 1);
-
-        bool noInput = true;
-
-        for(int i = 0; i < 4; i++)
-        {
-            if(i != 0 && InputDirection[i] != 0f)
-            {
-                noInput = false;
-                break;
-            }
-        }
-
-        if(noInput == true)
-        {
-            if (Acc >= MaxAcc)
-            {
-                Acc -= Time.deltaTime;
-            }
-            else
-            {
-                Acc = MaxAcc;
-
-                //Force += Vector3.forward;
-
-                //Force = Force.normalized;
-            }
-        }
+       
     }
 
+    void SmoothChangeAcc(bool positiveSign)
+    {
+        if (positiveSign)
+        {
+            Acc = Acc < MaxAcc ? Acc + Time.deltaTime : MaxAcc;
+        }
+        else
+        {
+            Acc = Acc > 0 ? Acc - Time.deltaTime : 0;
+        }
+    }
 
     void FixedUpdate()
     {
@@ -251,55 +185,39 @@ public class Engine : MonoBehaviour
 
         if(HydrogenOn == true)
         {
-            //Force += 1.2f * Vector3.up;
-                        
-            rb.velocity = Force;
-
-
             if (EngineOn == false)
             {
-                Force = transform.up * RateUp;
-
-                return;
+                Force = transform.position.y < maxHeight ? transform.up * RateUp * MovementConstant : Vector3.zero;
             }
             else
             {
-                Force = transform.forward + transform.up * RateUp;
+                Force = transform.position.y < maxHeight ? transform.forward * MovementConstant + transform.up * RateUp : transform.forward * MovementConstant;
+
+                Force *= Acc;
             }
         }
         else
         {
             if (EngineOn == true)
             {
-                Force = transform.forward * constant2;
+                Force = transform.forward * MovementConstant;
+
+                Force *= Acc;
             }
         }
 
-        rb.AddForce(Force * Acc);
-        
-
+        rb.AddForce(Force);
 
         for (int i = 0; i < 4; i++)
         {
-            if (InputDirection[i] != 0f)
-            {
-                if (Acc < MaxAcc)
-                {
-                    Acc += 2f * Time.deltaTime;
-                }
-                else
-                {
-                    Acc = MaxAcc;
-                }
-            }
-
             if(InputDirection[i] > 0f)
             {
-                if (i == (int)Dir.FRONT)
-                {
-                    //TODO usar transform.Forward
-                }
-                else if (i == (int)Dir.RIGHT)
+                //if (i == (int)Dir.FRONT)
+                //{
+                //    //TODO usar transform.Forward
+                //}
+                //else 
+                if (i == (int)Dir.RIGHT)
                 {
                     
                     Rotation(Vector3.right);
@@ -322,8 +240,8 @@ public class Engine : MonoBehaviour
 
     }
 
-    public float constant = 0f;
-    public float constant2 = 0f;
+    public float RotationConstant = 0f;
+    public float MovementConstant = 0f;
 
     void Rotation(Vector3 dir)
     {
@@ -351,7 +269,7 @@ public class Engine : MonoBehaviour
        // rb.AddTorque(Vector3.right * 100000 * Input.GetAxis("Horizontal"));
 
         //multiplicar pela constante do inspector
-        rb.AddForceAtPosition(RotationForce * constant, backPosition);
+        rb.AddForceAtPosition(RotationForce * RotationConstant, backPosition);
 
         Force = rb.velocity;
     }

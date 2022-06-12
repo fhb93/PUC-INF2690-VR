@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.57631105, g: 0.58525217, b: 0.46574122, a: 1}
+  m_IndirectSpecularColor: {r: 0.5763086, g: 0.58524585, b: 0.46573117, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -364,6 +364,75 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &932239005
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 700779309348495708, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 700779309348495708, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 700779309348495708, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 700779309348495708, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 700779309348495708, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 700779309348495708, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 700779309348495708, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 700779309348495708, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 700779309348495708, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 700779309348495708, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 700779309348495708, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4622094192629445706, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+        type: 3}
+      propertyPath: m_Name
+      value: World
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6b620afa30f041f41b8721f8cd56f4e1, type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +862,7 @@ PrefabInstance:
     - target: {fileID: 6727095404185000744, guid: 0e4a00106868f4741a4bcff7eb40e83c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 6727095404185000744, guid: 0e4a00106868f4741a4bcff7eb40e83c,
         type: 3}
@@ -803,7 +872,7 @@ PrefabInstance:
     - target: {fileID: 6727095404185000744, guid: 0e4a00106868f4741a4bcff7eb40e83c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 90.26
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 6727095404185000744, guid: 0e4a00106868f4741a4bcff7eb40e83c,
         type: 3}
@@ -890,6 +959,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: TerrainHelloWorld
       objectReference: {fileID: 0}
+    - target: {fileID: 7558081335514634259, guid: e4f3c37beff973e4ea121f0bf929c037,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558081335514634260, guid: e4f3c37beff973e4ea121f0bf929c037,
+        type: 3}
+      propertyPath: m_TerrainData
+      value: 
+      objectReference: {fileID: 15600000, guid: efb990e1ade1b0c4eac200b063b1e107,
+        type: 2}
     - target: {fileID: 7558081335514634262, guid: e4f3c37beff973e4ea121f0bf929c037,
         type: 3}
       propertyPath: m_RootOrder
