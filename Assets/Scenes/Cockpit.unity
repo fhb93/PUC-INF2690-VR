@@ -125,6 +125,23 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &98013969 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6551258702123161190, guid: 6b620afa30f041f41b8721f8cd56f4e1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1262629955}
+  m_PrefabAsset: {fileID: 0}
+--- !u!154 &98013970
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98013969}
+  m_Material: {fileID: 0}
+  m_Enabled: 1
+  m_TerrainData: {fileID: 15600000, guid: 2ac622394ff6a0e449d8db2bc9ef2303, type: 2}
+  m_EnableTreeColliders: 1
 --- !u!1001 &398610392
 PrefabInstance:
   m_ObjectHideFlags: 0
