@@ -273,4 +273,12 @@ public class Engine : MonoBehaviour
 
         Force = rb.velocity;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.name.Contains("Wayp"))
+        {
+            other.gameObject.GetComponent<WaypointLogic>().WayPointIsReached();
+        }
+    }
 }
