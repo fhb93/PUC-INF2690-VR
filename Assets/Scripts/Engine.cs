@@ -56,6 +56,7 @@ public class Engine : MonoBehaviour
 
     private float maxTimer = 0.4f;
 
+
     public enum Dir{
         FRONT,
         LEFT,
@@ -67,6 +68,11 @@ public class Engine : MonoBehaviour
 
     [Range(-1, 1)]
     public float[] InputDirection = new float[4];
+
+    [SerializeField]
+    private Transform Wheel;
+
+    public float WheelAngle;
 
     // Start is called before the first frame update
     void Start()
@@ -80,11 +86,16 @@ public class Engine : MonoBehaviour
         m_EulerAngleVelocity = new Vector3(0, 1, 0);
 
         backPosition = GameObject.Find("ForcesTarget").transform.position;
-        
-        for(int i = 0; i < InputDirection.Length; i++)
+
+        Wheel = GameObject.Find("ShipWheel").transform;
+
+        WheelAngle = Wheel.rotation.z;
+
+        for (int i = 0; i < InputDirection.Length; i++)
         {
             InputDirection[i] = 0f;
         }
+
 
         //Time.timeScale = 10f;
     }
@@ -162,6 +173,7 @@ public class Engine : MonoBehaviour
 
         InputDirection[(int) Dir.RIGHT] = Mathf.Clamp(Input.GetAxis("Horizontal"), 0, 1);
        
+
     }
 
     void SmoothChangeAcc(bool positiveSign)
@@ -178,12 +190,12 @@ public class Engine : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(EngineOn == false && HydrogenOn == false)
+        if (EngineOn == false && HydrogenOn == false)
         {
             return;
         }
 
-        if(HydrogenOn == true)
+        if (HydrogenOn == true)
         {
             if (EngineOn == false)
             {
@@ -210,7 +222,7 @@ public class Engine : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            if(InputDirection[i] > 0f)
+            if (InputDirection[i] > 0f)
             {
                 //if (i == (int)Dir.FRONT)
                 //{
@@ -219,15 +231,18 @@ public class Engine : MonoBehaviour
                 //else 
                 if (i == (int)Dir.RIGHT)
                 {
-                    
+
                     Rotation(Vector3.right);
+                    MoveWheel(false);
+
                 }
             }
-            else if(InputDirection[i] < 0f)
+            else if (InputDirection[i] < 0f)
             {
                 if (i == (int)Dir.LEFT)
                 {
                     Rotation(Vector3.left);
+                    MoveWheel(true);
                 }
                 else if (i == (int)Dir.BACK)
                 {
@@ -235,10 +250,24 @@ public class Engine : MonoBehaviour
                     Force = Vector3.back;
                 }
             }
+
+        }
+    }
+
+
+    private void MoveWheel(bool left)
+    {
+        if(left)
+        {
+            Wheel.Rotate(Vector3.forward, Mathf.Lerp(WheelAngle, 90, Time.deltaTime));
+        }
+        else
+        {
+            Wheel.Rotate(Vector3.forward, Mathf.Lerp(WheelAngle, -90, Time.deltaTime));
         }
 
-
     }
+
 
     public float RotationConstant = 0f;
     public float MovementConstant = 0f;
