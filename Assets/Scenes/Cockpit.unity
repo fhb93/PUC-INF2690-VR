@@ -684,6 +684,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 72186814055168604, guid: c78e296eb9ba8984b983a014cdfd2c11,
+        type: 3}
+      propertyPath: near clip plane
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164851374800479876, guid: c78e296eb9ba8984b983a014cdfd2c11,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 34d034145faecbf4cbb93a89e46eb181, type: 3}
+    - target: {fileID: 5164851374800479876, guid: c78e296eb9ba8984b983a014cdfd2c11,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6654917439447857176, guid: c78e296eb9ba8984b983a014cdfd2c11,
         type: 3}
       propertyPath: m_Name
@@ -747,6 +762,11 @@ PrefabInstance:
     - target: {fileID: 6654917439447857179, guid: c78e296eb9ba8984b983a014cdfd2c11,
         type: 3}
       propertyPath: HydrogenOn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282671411590602352, guid: c78e296eb9ba8984b983a014cdfd2c11,
+        type: 3}
+      propertyPath: UserInput
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
