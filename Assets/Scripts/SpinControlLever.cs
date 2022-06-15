@@ -51,7 +51,7 @@ public class SpinControlLever : MonoBehaviour
 
         angleLever = Lever.transform.rotation.z;
 
-        while (i < 160)
+        while (i < 90)
         {
             if(ControlsEngine)
             {
