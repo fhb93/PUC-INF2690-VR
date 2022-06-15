@@ -167,7 +167,7 @@ PrefabInstance:
     - target: {fileID: 1934623579701295985, guid: 2c4449e8d9dfb7a4d85c4c32a4f4a52e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 310.4
+      value: 443
       objectReference: {fileID: 0}
     - target: {fileID: 1934623579701295985, guid: 2c4449e8d9dfb7a4d85c4c32a4f4a52e,
         type: 3}
@@ -209,6 +209,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DenseFog (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1934623580240587524, guid: 2c4449e8d9dfb7a4d85c4c32a4f4a52e,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1934623580240587526, guid: 2c4449e8d9dfb7a4d85c4c32a4f4a52e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -222,7 +227,7 @@ PrefabInstance:
     - target: {fileID: 1934623580240587526, guid: 2c4449e8d9dfb7a4d85c4c32a4f4a52e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 151
+      value: 130.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c4449e8d9dfb7a4d85c4c32a4f4a52e, type: 3}
@@ -1020,6 +1025,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DenseFog
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934623580240587524, guid: 2c4449e8d9dfb7a4d85c4c32a4f4a52e,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1934623580240587526, guid: 2c4449e8d9dfb7a4d85c4c32a4f4a52e,
         type: 3}
