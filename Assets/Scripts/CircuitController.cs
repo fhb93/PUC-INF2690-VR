@@ -58,6 +58,6 @@ public class CircuitController : MonoBehaviour
 
         yield return new WaitForSeconds(4f);
 
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 }

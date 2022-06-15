@@ -22,6 +22,14 @@ public class MainMenuController : MonoBehaviour
         Time.timeScale = 0f;
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            Application.Quit(0);
+        }
+    }
+
     IEnumerator Fadeout()
     {
         yield return new WaitForSecondsRealtime(8f);
