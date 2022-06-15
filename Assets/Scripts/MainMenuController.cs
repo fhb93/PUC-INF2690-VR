@@ -24,7 +24,7 @@ public class MainMenuController : MonoBehaviour
 
     IEnumerator Fadeout()
     {
-        yield return new WaitForSecondsRealtime(4f);
+        yield return new WaitForSecondsRealtime(8f);
 
         float alpha = 1;
 
