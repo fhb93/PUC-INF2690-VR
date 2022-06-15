@@ -20,6 +20,8 @@ public class SpinControlLever : MonoBehaviour
     [SerializeField]
     private bool ControlsEngine;
 
+    private float angleLever = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,9 +49,9 @@ public class SpinControlLever : MonoBehaviour
     {
         int i = 0;
 
-        float angleLever = 0;
+        angleLever = Lever.transform.rotation.z;
 
-        while (i < 120)
+        while (i < 160)
         {
             if(ControlsEngine)
             {
