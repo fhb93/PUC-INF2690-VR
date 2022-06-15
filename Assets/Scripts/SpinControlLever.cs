@@ -29,6 +29,12 @@ public class SpinControlLever : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Temp
+        if((ControlsHydrogen && Input.GetKeyDown(KeyCode.H)) || (ControlsEngine && Input.GetKeyDown(KeyCode.E)))
+        {
+            UserInput = true;
+        }
+
         if (UserInput)
         {
             UserInput = false;
