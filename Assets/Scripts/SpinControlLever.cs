@@ -45,39 +45,61 @@ public class SpinControlLever : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private float maxSpinAngle = -70f;
+
+    [SerializeField]
+    private float minSpinAngle = 60f;
+
+    private bool RotateLeverAngle(bool isOn)
+    {
+        if (isOn)
+        {
+            if (Lever.transform.rotation.z < minSpinAngle)
+            {
+                angleLever += Time.deltaTime;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            if (Lever.transform.rotation.z > maxSpinAngle)
+            {
+                angleLever -= Time.deltaTime;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        Lever.transform.RotateAround(LeverSpinPoint.position, Lever.transform.forward, angleLever);
+
+        return false;
+    }
+
     IEnumerator LeverCoroutine()
     {
         int i = 0;
 
         angleLever = Lever.transform.rotation.z;
 
-        while (i < 90)
+        bool hasMaxRotation = false;
+
+        while (i < 200 && hasMaxRotation == false)
         {
             if(ControlsEngine)
             {
-                if(engine.EngineOn)
-                {
-                    angleLever += Time.deltaTime;
-                }
-                else
-                {
-                    angleLever -=  Time.deltaTime;
-                }
+                hasMaxRotation = RotateLeverAngle(engine.EngineOn);
             }
 
             if (ControlsHydrogen)
             {
-                if (engine.HydrogenOn)
-                {
-                    angleLever += Time.deltaTime;
-                }
-                else
-                {
-                    angleLever -= Time.deltaTime;
-                }
+                hasMaxRotation = RotateLeverAngle(engine.HydrogenOn);
             }
-
-            Lever.transform.RotateAround(LeverSpinPoint.position, Lever.transform.forward, angleLever);
 
             i++;
 
