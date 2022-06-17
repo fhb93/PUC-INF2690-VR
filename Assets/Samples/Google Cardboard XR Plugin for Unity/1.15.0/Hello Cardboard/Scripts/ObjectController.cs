@@ -45,13 +45,15 @@ public class ObjectController : MonoBehaviour
     private Renderer _myRenderer;
     private Vector3 _startingPosition;
 
+    private ArrowHint hint;
     /// <summary>
     /// Start is called before the first frame update.
     /// </summary>
     public void Start()
     {
         _startingPosition = transform.parent.localPosition;
-        _myRenderer = GetComponent<Renderer>();
+        _myRenderer = GetComponentInChildren<Renderer>();
+        hint = GetComponent<ArrowHint>();
         SetMaterial(false);
     }
 
@@ -86,6 +88,7 @@ public class ObjectController : MonoBehaviour
     /// </summary>
     public void OnPointerEnter()
     {
+        hint.IsEnabled = true;
         SetMaterial(true);
     }
 
@@ -94,6 +97,7 @@ public class ObjectController : MonoBehaviour
     /// </summary>
     public void OnPointerExit()
     {
+        hint.IsEnabled = false;
         SetMaterial(false);
     }
 
@@ -118,6 +122,7 @@ public class ObjectController : MonoBehaviour
         if (InactiveMaterial != null && GazedAtMaterial != null)
         {
             _myRenderer.material = gazedAt ? GazedAtMaterial : InactiveMaterial;
+            
         }
     }
 }

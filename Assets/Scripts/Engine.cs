@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Unity.XR.Oculus;
 
 public class Engine : MonoBehaviour
 {
@@ -26,9 +27,6 @@ public class Engine : MonoBehaviour
     private Vector3 AuxForce;
 
     private Rigidbody rb;
-
-    //Roation Angle
-    private float RotationAmount = 0;
 
     [Range(1f, 10f)]
     public float RateUp = 1f;
