@@ -32,7 +32,7 @@ public class SpinControlLever : MonoBehaviour
     void Update()
     {
         //Temp
-        if((ControlsHydrogen && Input.GetKeyDown(KeyCode.H)) || (ControlsEngine && Input.GetKeyDown(KeyCode.E)))
+        if((ControlsHydrogen && OVRInput.Get(OVRInput.Button.One))/* || (ControlsEngine && OVRInput.Get(OVRInput.))*/)
         {
             UserInput = true;
         }

@@ -24,7 +24,7 @@ public class MainMenuController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (OVRInput.Get(OVRInput.Button.Back))
         {
             Application.Quit(0);
         }

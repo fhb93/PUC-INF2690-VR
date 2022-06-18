@@ -12,16 +12,15 @@ public class MoveCamera : MonoBehaviour
 
     Vector3 offset;
 
-    public GearVRTrackedController controller;
+   // public GearVRTrackedController controller;
 
     void FixedUpdate()
     {
 #if UNITY_EDITOR
-        float rotateHorizontal = Input.GetAxis("Mouse X") * 20;
-        float rotateVertical = Input.GetAxis("Mouse Y") * 18;
-       // Vector3 target = (transform.up * rotateHorizontal - transform.right * rotateVertical) * sensitivity;
-        transform.Rotate(transform.up * rotateHorizontal * sensitivity);
-        transform.Rotate(-transform.right * rotateVertical * sensitivity);
+        //float rotateHorizontal = Input.GetAxis("Mouse X") * 20;
+        //float rotateVertical = Input.GetAxis("Mouse Y") * 18;
+        //transform.Rotate(transform.up * rotateHorizontal * sensitivity);
+        //transform.Rotate(-transform.right * rotateVertical * sensitivity);
        
 #else
 
@@ -38,7 +37,7 @@ public class MoveCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("MainCamera");
+        //player = GameObject.FindWithTag("MainCamera");
 
         //offset = transform.position - player.transform.position;
     }

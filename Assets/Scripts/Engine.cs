@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Unity.XR.Oculus;
+using Unity.XR.Oculus.Input;
+using OVR.OpenVR;
 
 public class Engine : MonoBehaviour
 {
@@ -162,13 +164,13 @@ public class Engine : MonoBehaviour
             }
         }
 
-        InputDirection[(int) Dir.FRONT] = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
+        //InputDirection[(int) Dir.FRONT] = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
         
-        InputDirection[(int) Dir.LEFT] = Mathf.Clamp(Input.GetAxis("Horizontal"), -1, 0);
+        //InputDirection[(int) Dir.LEFT] = Mathf.Clamp(Input.GetAxis("Horizontal"), -1, 0);
 
-        InputDirection[(int) Dir.BACK] = Mathf.Clamp(Input.GetAxis("Vertical"), -1, 0);
+        //InputDirection[(int) Dir.BACK] = Mathf.Clamp(Input.GetAxis("Vertical"), -1, 0);
 
-        InputDirection[(int) Dir.RIGHT] = Mathf.Clamp(Input.GetAxis("Horizontal"), 0, 1);
+        //InputDirection[(int) Dir.RIGHT] = Mathf.Clamp(Input.GetAxis("Horizontal"), 0, 1);
        
 
     }
